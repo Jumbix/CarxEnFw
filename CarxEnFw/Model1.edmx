@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Carx_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MarcaMasina">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeMarca" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AnulInfintarii" Type="int" />
+        </EntityType>
+        <EntityType Name="Masina">
+          <Key>
+            <PropertyRef Name="Id_Masina" />
+          </Key>
+          <Property Name="Combustibil" Type="varchar" MaxLength="50" />
+          <Property Name="Kilometraj" Type="int" />
+          <Property Name="Pret" Type="int" />
+          <Property Name="AnFab" Type="int" />
+          <Property Name="Id_Model" Type="int" />
+          <Property Name="Id_Masina" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ModelMasina">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeModel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_Marca" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Masina_ModelMasina">
+          <End Role="ModelMasina" Type="Self.ModelMasina" Multiplicity="0..1" />
+          <End Role="Masina" Type="Self.Masina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModelMasina">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Masina">
+              <PropertyRef Name="Id_Model" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModelMasina_MarcaMasina">
+          <End Role="MarcaMasina" Type="Self.MarcaMasina" Multiplicity="1" />
+          <End Role="ModelMasina" Type="Self.ModelMasina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MarcaMasina">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ModelMasina">
+              <PropertyRef Name="Id_Marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Carx_dbModelStoreContainer">
+          <EntitySet Name="MarcaMasina" EntityType="Self.MarcaMasina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Masina" EntityType="Self.Masina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ModelMasina" EntityType="Self.ModelMasina" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Masina_ModelMasina" Association="Self.FK_Masina_ModelMasina">
+            <End Role="ModelMasina" EntitySet="ModelMasina" />
+            <End Role="Masina" EntitySet="Masina" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModelMasina_MarcaMasina" Association="Self.FK_ModelMasina_MarcaMasina">
+            <End Role="MarcaMasina" EntitySet="MarcaMasina" />
+            <End Role="ModelMasina" EntitySet="ModelMasina" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Carx_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MarcaMasina">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeMarca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AnulInfintarii" Type="Int32" />
+          <NavigationProperty Name="ModelMasinas" Relationship="Self.FK_ModelMasina_MarcaMasina" FromRole="MarcaMasina" ToRole="ModelMasina" />
+        </EntityType>
+        <EntityType Name="Masina">
+          <Key>
+            <PropertyRef Name="Id_Masina" />
+          </Key>
+          <Property Name="Combustibil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Kilometraj" Type="Int32" />
+          <Property Name="Pret" Type="Int32" />
+          <Property Name="AnFab" Type="Int32" />
+          <Property Name="Id_Model" Type="Int32" />
+          <Property Name="Id_Masina" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ModelMasina" Relationship="Self.FK_Masina_ModelMasina" FromRole="Masina" ToRole="ModelMasina" />
+        </EntityType>
+        <EntityType Name="ModelMasina">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id_Marca" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MarcaMasina" Relationship="Self.FK_ModelMasina_MarcaMasina" FromRole="ModelMasina" ToRole="MarcaMasina" />
+          <NavigationProperty Name="Masinas" Relationship="Self.FK_Masina_ModelMasina" FromRole="ModelMasina" ToRole="Masina" />
+        </EntityType>
+        <Association Name="FK_ModelMasina_MarcaMasina">
+          <End Role="MarcaMasina" Type="Self.MarcaMasina" Multiplicity="1" />
+          <End Role="ModelMasina" Type="Self.ModelMasina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MarcaMasina">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ModelMasina">
+              <PropertyRef Name="Id_Marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Masina_ModelMasina">
+          <End Role="ModelMasina" Type="Self.ModelMasina" Multiplicity="0..1" />
+          <End Role="Masina" Type="Self.Masina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModelMasina">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Masina">
+              <PropertyRef Name="Id_Model" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Carx_dbEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MarcaMasinas" EntityType="Self.MarcaMasina" />
+          <EntitySet Name="Masinas" EntityType="Self.Masina" />
+          <EntitySet Name="ModelMasinas" EntityType="Self.ModelMasina" />
+          <AssociationSet Name="FK_ModelMasina_MarcaMasina" Association="Self.FK_ModelMasina_MarcaMasina">
+            <End Role="MarcaMasina" EntitySet="MarcaMasinas" />
+            <End Role="ModelMasina" EntitySet="ModelMasinas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Masina_ModelMasina" Association="Self.FK_Masina_ModelMasina">
+            <End Role="ModelMasina" EntitySet="ModelMasinas" />
+            <End Role="Masina" EntitySet="Masinas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Carx_dbModelStoreContainer" CdmEntityContainer="Carx_dbEntities2">
+          <EntitySetMapping Name="MarcaMasinas">
+            <EntityTypeMapping TypeName="Carx_dbModel.MarcaMasina">
+              <MappingFragment StoreEntitySet="MarcaMasina">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NumeMarca" ColumnName="NumeMarca" />
+                <ScalarProperty Name="AnulInfintarii" ColumnName="AnulInfintarii" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Masinas">
+            <EntityTypeMapping TypeName="Carx_dbModel.Masina">
+              <MappingFragment StoreEntitySet="Masina">
+                <ScalarProperty Name="Combustibil" ColumnName="Combustibil" />
+                <ScalarProperty Name="Kilometraj" ColumnName="Kilometraj" />
+                <ScalarProperty Name="Pret" ColumnName="Pret" />
+                <ScalarProperty Name="AnFab" ColumnName="AnFab" />
+                <ScalarProperty Name="Id_Model" ColumnName="Id_Model" />
+                <ScalarProperty Name="Id_Masina" ColumnName="Id_Masina" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModelMasinas">
+            <EntityTypeMapping TypeName="Carx_dbModel.ModelMasina">
+              <MappingFragment StoreEntitySet="ModelMasina">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NumeModel" ColumnName="NumeModel" />
+                <ScalarProperty Name="Id_Marca" ColumnName="Id_Marca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

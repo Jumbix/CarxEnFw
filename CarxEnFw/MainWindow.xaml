@@ -1,0 +1,60 @@
+﻿<Window x:Class="CarxEnFw.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarxEnFw"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Border Padding="10">
+        <StackPanel >
+            <Grid Height="120" Margin="0 0 0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <ComboBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="carName_SelectionChanged"
+                          x:Name="carName" IsSynchronizedWithCurrentItem="True" ></ComboBox>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="12,0,0,0" TextWrapping="Wrap" Text="Marca" VerticalAlignment="Top"/>
+                <ComboBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Width="120" 
+                          x:Name="carModel" ItemsSource="{Binding}" SelectionChanged="carModel_SelectionChanged">
+                </ComboBox>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="12,0,0,0" TextWrapping="Wrap" Text="Model" VerticalAlignment="Top" Grid.RowSpan="7"/>
+                <TextBox Grid.Column="0" HorizontalAlignment="Left" Margin="0,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70" x:Name="priceRange1" />
+                <TextBox Grid.Column="0" HorizontalAlignment="Right" Margin="0,25,25,0" Grid.Row="1" VerticalAlignment="Top" Width="70" x:Name="priceRange2" />
+                <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="12,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Pret" VerticalAlignment="Top"/>
+                <Button Content="Cauta" Grid.Column="4" HorizontalAlignment="Left" Margin="40,21,0,0" Grid.Row="0" VerticalAlignment="Top" Width="106" Click="Button_Click" FontSize="15"/>
+                <ComboBox Grid.Column="4" HorizontalAlignment="Left" Margin="179,102,0,0" Grid.Row="6" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged_1" x:Name="buildYear">
+                    <ComboBoxItem Content="{Binding}"/>
+                </ComboBox>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="12,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Text="Anul Fabricatiei"/>
+                <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="0,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" x:Name="anItem" ItemsSource="{Binding}"/>
+                <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="12,0,0,0" Grid.Row="0" TextWrapping="Wrap" Text="Kilometraj" VerticalAlignment="Top"/>
+                <ComboBox Grid.Column="2" HorizontalAlignment="Left" Margin="0,25,0,0" Grid.Row="0" VerticalAlignment="Top" Width="120" x:Name="mileage">
+                    <ComboBoxItem Content="10000"/>
+                    <ComboBoxItem Content="20000"/>
+                    <ComboBoxItem Content="50000"/>
+                    <ComboBoxItem Content="80000"/>
+                    <ComboBoxItem Content="100000"/>
+                    <ComboBoxItem Content="200000"/>
+                    <ComboBoxItem Content="500000"/>
+                </ComboBox>
+                <Label Content="Combustibil" Grid.Column="2" HorizontalAlignment="Left" Margin="12,0,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+                <ComboBox Grid.Column="2" HorizontalAlignment="Left" Margin="0,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" x:Name="runsOn">
+                    <ComboBoxItem Content="{Binding}" />
+                </ComboBox>
+                <Button Content="Adauga" Grid.Column="3" HorizontalAlignment="Left" Margin="40,21,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Click="Add_Car" FontSize="15"/>
+
+            </Grid>
+            <DataGrid Height="270" SelectionChanged="DataGrid_SelectionChanged" x:Name="OfferGrid" ItemsSource="{Binding}"/>
+
+        </StackPanel>
+    </Border>
+</Window>
